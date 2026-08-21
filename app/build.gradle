@@ -6,7 +6,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.best.deskclock"
+        applicationId = "com.maxxcodebug.maxxclock"
         minSdk = 23
         targetSdk = 36
         versionCode = 2035
@@ -59,9 +59,9 @@ android {
         }
 
         debug {
-            manifestPlaceholders = [appName: "@string/app_label_debug"]
-            versionNameSuffix = "-debug"
-            applicationIdSuffix = ".debug"
+            manifestPlaceholders = [appName: "@string/app_label_dev"]
+            versionNameSuffix = "-dev"
+            applicationIdSuffix = ".dev"
             buildConfigField "boolean", "IS_DEBUG_BUILD", "true"
             buildConfigField "boolean", "IS_NIGHTLY_BUILD", "false"
             buildConfigField "String", "COMMIT_NUMBER", "\"\""
@@ -87,10 +87,12 @@ android {
             def outputFileName
 
             if (variant.buildType == "nightly") {
-                outputFileName = "Clock_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
+                outputFileName = "MaxxClock_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
+            } else if (variant.buildType == "release") {
+                outputFileName = "MaxxClock_${versionName}-stable.apk"
             } else {
                 def suffix = versionNameSuffix ?: (keystorePropertiesFile.exists() ? "-release" : "-unsigned")
-                outputFileName = "Clock_${versionName}${suffix}.apk"
+                outputFileName = "MaxxClock_${versionName}${suffix}.apk"
             }
 
             variant.outputs.forEach { output ->
@@ -120,7 +122,7 @@ android {
 
     ndkVersion = '29.0.14206865'
 
-    namespace = 'com.best.deskclock'
+    namespace = 'com.maxxcodebug.maxxclock'
 }
 
 dependencies {
@@ -130,5 +132,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'com.google.android.material:material:1.14.0'
+    implementation 'com.github.Dimezis:BlurView:version-2.0.6'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
 }

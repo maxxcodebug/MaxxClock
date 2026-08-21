@@ -1,0 +1,49 @@
+/*
+ * Copyright (C) 2015 The Android Open Source Project
+ * modified
+ * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
+ */
+
+package com.maxxcodebug.maxxclock.uicomponents.toast;
+
+import static com.maxxcodebug.maxxclock.DeskClockApplication.getDefaultSharedPreferences;
+
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+
+import com.maxxcodebug.maxxclock.R;
+import com.maxxcodebug.maxxclock.data.SettingsDAO;
+import com.maxxcodebug.maxxclock.utils.ThemeUtils;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.lang.ref.WeakReference;
+
+/**
+ * Manages visibility of Snackbar and allow preemptive dismiss of current displayed Snackbar.
+ */
+public final class SnackbarManager {
+
+    private static WeakReference<Snackbar> sSnackbar = null;
+
+    public static void show(Snackbar snackbar) {
+        sSnackbar = new WeakReference<>(snackbar);
+        if (ThemeUtils.isTablet() || ThemeUtils.isPortrait()) {
+            snackbar.setAnchorView(R.id.desk_clock_button_layout);
+        }
+
+        SharedPreferences prefs = getDefaultSharedPreferences(snackbar.getContext());
+        Typeface typeface = ThemeUtils.loadFont(SettingsDAO.getGeneralFont(prefs));
+        ThemeUtils.applyTypeface(snackbar.getView(), typeface);
+
+        snackbar.show();
+    }
+
+    public static void dismiss() {
+        final Snackbar snackbar = sSnackbar == null ? null : sSnackbar.get();
+        if (snackbar != null) {
+            snackbar.dismiss();
+            sSnackbar = null;
+        }
+    }
+
+}

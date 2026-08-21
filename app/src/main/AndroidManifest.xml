@@ -42,7 +42,7 @@
         android:required="false" />
 
     <application
-        android:name="com.best.deskclock.DeskClockApplication"
+        android:name="com.maxxcodebug.maxxclock.DeskClockApplication"
         android:allowBackup="false"
         android:appCategory="productivity"
         android:icon="@mipmap/ic_launcher"
@@ -69,13 +69,13 @@
         <!-- ============================================================== -->
 
         <activity
-            android:name="com.best.deskclock.setup.FirstLaunch"
+            android:name="com.maxxcodebug.maxxclock.setup.FirstLaunch"
             android:launchMode="singleTask"
             android:theme="@style/Theme.DeskClock">
         </activity>
 
         <activity
-            android:name="com.best.deskclock.DeskClock"
+            android:name="com.maxxcodebug.maxxclock.DeskClock"
             android:exported="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
@@ -88,13 +88,13 @@
         </activity>
 
         <activity
-            android:name="com.best.deskclock.ringtone.RingtonePickerActivity"
+            android:name="com.maxxcodebug.maxxclock.ringtone.RingtonePickerActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.DeskClock" />
 
         <activity
-            android:name="com.best.deskclock.worldclock.CitySelectionActivity"
+            android:name="com.maxxcodebug.maxxclock.worldclock.CitySelectionActivity"
             android:excludeFromRecents="true"
             android:label="@string/cities_activity_title"
             android:parentActivityName=".DeskClock"
@@ -102,7 +102,7 @@
             android:theme="@style/Theme.DeskClock" />
 
         <activity
-            android:name="com.best.deskclock.settings.SettingsActivity"
+            android:name="com.maxxcodebug.maxxclock.settings.SettingsActivity"
             android:excludeFromRecents="true"
             android:label="@string/settings"
             android:parentActivityName=".DeskClock"
@@ -115,21 +115,21 @@
         </activity>
 
         <activity
-            android:name="com.best.deskclock.settings.PermissionsManagementActivity"
+            android:name="com.maxxcodebug.maxxclock.settings.PermissionsManagementActivity"
             android:excludeFromRecents="true"
             android:label="@string/permission_management_settings"
             android:taskAffinity=""
             android:theme="@style/Theme.DeskClock" />
 
         <activity
-            android:name="com.best.deskclock.controller.HandleShortcuts"
+            android:name="com.maxxcodebug.maxxclock.controller.HandleShortcuts"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity=""
             android:theme="@android:style/Theme.NoDisplay" />
 
         <service
-            android:name="com.best.deskclock.base.KeepAliveService"
+            android:name="com.maxxcodebug.maxxclock.base.KeepAliveService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse">
@@ -143,7 +143,7 @@
         <!-- ============================================================== -->
 
         <activity
-            android:name="com.best.deskclock.controller.HandleApiCalls"
+            android:name="com.maxxcodebug.maxxclock.controller.HandleApiCalls"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
@@ -163,10 +163,10 @@
         </activity>
 
         <activity-alias
-            android:name="com.best.deskclock.HandleSetAlarmApiCalls"
+            android:name="com.maxxcodebug.maxxclock.HandleSetAlarmApiCalls"
             android:permission="com.android.alarm.permission.SET_ALARM"
             android:exported="true"
-            android:targetActivity="com.best.deskclock.controller.HandleApiCalls">
+            android:targetActivity="com.maxxcodebug.maxxclock.controller.HandleApiCalls">
             <intent-filter>
                 <action android:name="android.intent.action.SET_ALARM" />
                 <action android:name="android.intent.action.SET_TIMER" />
@@ -180,7 +180,7 @@
         <!-- ============================================================== -->
 
         <activity
-            android:name="com.best.deskclock.alarms.AlarmActivity"
+            android:name="com.maxxcodebug.maxxclock.alarms.AlarmActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:resizeableActivity="false"
@@ -193,24 +193,24 @@
             tools:ignore="DiscouragedApi, NonResizeableActivity" />
 
         <activity
-            android:name="com.best.deskclock.settings.AlarmDisplayPreviewActivity"
+            android:name="com.maxxcodebug.maxxclock.settings.AlarmDisplayPreviewActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.DeskClock.Wallpaper" />
 
         <activity
-            android:name="com.best.deskclock.alarms.alarmselection.AlarmSelectionActivity"
+            android:name="com.maxxcodebug.maxxclock.alarms.alarmselection.AlarmSelectionActivity"
             android:label="@string/dismiss_alarm"
             android:theme="@android:style/Theme.Material.Dialog.NoActionBar" />
 
         <provider
-            android:name="com.best.deskclock.provider.ClockProvider"
+            android:name="com.maxxcodebug.maxxclock.provider.ClockProvider"
             android:authorities="${applicationId}"
             android:directBootAware="true"
             android:exported="false" />
 
         <receiver
-            android:name="com.best.deskclock.alarms.AlarmInitReceiver"
+            android:name="com.maxxcodebug.maxxclock.alarms.AlarmInitReceiver"
             android:directBootAware="true"
             android:exported="true">
             <intent-filter>
@@ -225,7 +225,7 @@
         </receiver>
 
         <receiver
-            android:name="com.best.deskclock.base.PackageReplacedReceiver"
+            android:name="com.maxxcodebug.maxxclock.base.PackageReplacedReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
@@ -233,12 +233,12 @@
         </receiver>
 
         <receiver
-            android:name="com.best.deskclock.alarms.AlarmStateManager"
+            android:name="com.maxxcodebug.maxxclock.alarms.AlarmStateManager"
             android:exported="false"
             android:directBootAware="true" />
 
         <service
-            android:name="com.best.deskclock.alarms.AlarmService"
+            android:name="com.maxxcodebug.maxxclock.alarms.AlarmService"
             android:exported="false"
             android:directBootAware="true"
             android:foregroundServiceType="specialUse">
@@ -252,7 +252,7 @@
         <!-- ============================================================== -->
 
         <activity
-            android:name="com.best.deskclock.timer.ExpiredTimersActivity"
+            android:name="com.maxxcodebug.maxxclock.timer.ExpiredTimersActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
@@ -265,18 +265,18 @@
             tools:ignore="DiscouragedApi, NonResizeableActivity" />
 
         <activity
-            android:name="com.best.deskclock.settings.TimerDisplayPreviewActivity"
+            android:name="com.maxxcodebug.maxxclock.settings.TimerDisplayPreviewActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.DeskClock.Wallpaper" />
 
         <receiver
-            android:name="com.best.deskclock.timer.TimerAlertReceiver"
+            android:name="com.maxxcodebug.maxxclock.timer.TimerAlertReceiver"
             android:exported="false"
             android:directBootAware="true" />
 
         <service
-            android:name="com.best.deskclock.timer.TimerService"
+            android:name="com.maxxcodebug.maxxclock.timer.TimerService"
             android:description="@string/timer_service_desc"
             android:exported="false"
             android:directBootAware="true"
@@ -291,7 +291,7 @@
         <!-- ============================================================== -->
 
         <service
-            android:name="com.best.deskclock.stopwatch.StopwatchService"
+            android:name="com.maxxcodebug.maxxclock.stopwatch.StopwatchService"
             android:description="@string/stopwatch_service_desc"
             android:directBootAware="true"
             android:foregroundServiceType="specialUse">
@@ -305,7 +305,7 @@
         <!-- ============================================================== -->
 
         <activity
-            android:name="com.best.deskclock.screensaver.ScreensaverActivity"
+            android:name="com.maxxcodebug.maxxclock.screensaver.ScreensaverActivity"
             android:exported="true"
             android:excludeFromRecents="true"
             android:resizeableActivity="false"
@@ -314,19 +314,19 @@
             tools:ignore="DiscouragedApi, NonResizeableActivity" />
 
         <activity
-            android:name="com.best.deskclock.settings.ScreensaverSettingsActivity"
+            android:name="com.maxxcodebug.maxxclock.settings.ScreensaverSettingsActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.DeskClock" />
 
         <service
-            android:name="com.best.deskclock.screensaver.Screensaver"
+            android:name="com.maxxcodebug.maxxclock.screensaver.Screensaver"
             android:exported="true"
             android:label="@string/app_label"
             android:permission="android.permission.BIND_DREAM_SERVICE">
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />
-                <action android:name="com.best.deskclock.NEXT_ALARM_CHANGED_BY_CLOCK" />
+                <action android:name="com.maxxcodebug.maxxclock.NEXT_ALARM_CHANGED_BY_CLOCK" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -338,7 +338,7 @@
         <!-- Receiver for handling the daily update of app widgets at midnight
              and more mainly the widgets that display the date -->
         <receiver
-            android:name="com.best.deskclock.widgets.DailyWidgetUpdateReceiver"
+            android:name="com.maxxcodebug.maxxclock.widgets.DailyWidgetUpdateReceiver"
             android:directBootAware="true">
         </receiver>
 
@@ -348,13 +348,13 @@
 
         <!-- Analog clock -->
         <activity
-            android:name="com.best.deskclock.widgets.WidgetConfiguration$AnalogWidgetConfiguration"
+            android:name="com.maxxcodebug.maxxclock.widgets.WidgetConfiguration$AnalogWidgetConfiguration"
             android:excludeFromRecents="true"
             android:label="@string/analog_widget"
             android:theme="@style/Theme.DeskClock" />
 
         <receiver
-            android:name="com.best.deskclock.widgets.AnalogAppWidgetProvider"
+            android:name="com.maxxcodebug.maxxclock.widgets.AnalogAppWidgetProvider"
             android:exported="true"
             android:label="@string/analog_widget">
             <intent-filter>
@@ -367,13 +367,13 @@
 
         <!-- Digital clock -->
         <activity
-            android:name="com.best.deskclock.widgets.WidgetConfiguration$DigitalWidgetConfiguration"
+            android:name="com.maxxcodebug.maxxclock.widgets.WidgetConfiguration$DigitalWidgetConfiguration"
             android:excludeFromRecents="true"
             android:label="@string/digital_widget"
             android:theme="@style/Theme.DeskClock" />
 
         <receiver
-            android:name="com.best.deskclock.widgets.DigitalAppWidgetProvider"
+            android:name="com.maxxcodebug.maxxclock.widgets.DigitalAppWidgetProvider"
             android:exported="true"
             android:label="@string/digital_widget">
             <intent-filter>
@@ -383,7 +383,7 @@
                 <action android:name="android.intent.action.APPLICATION_LOCALE_CHANGED" />
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="com.best.deskclock.ON_DAY_CHANGE" />
+                <action android:name="com.maxxcodebug.maxxclock.ON_DAY_CHANGE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
@@ -391,19 +391,19 @@
         </receiver>
 
         <service
-            android:name="com.best.deskclock.widgets.AppWidgetCityService$DigitalAppWidgetCityService"
+            android:name="com.maxxcodebug.maxxclock.widgets.AppWidgetCityService$DigitalAppWidgetCityService"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- Vertical clock -->
         <activity
-            android:name="com.best.deskclock.widgets.WidgetConfiguration$VerticalWidgetConfiguration"
+            android:name="com.maxxcodebug.maxxclock.widgets.WidgetConfiguration$VerticalWidgetConfiguration"
             android:excludeFromRecents="true"
             android:label="@string/vertical_widget"
             android:theme="@style/Theme.DeskClock" />
 
         <receiver
-            android:name="com.best.deskclock.widgets.VerticalAppWidgetProvider"
+            android:name="com.maxxcodebug.maxxclock.widgets.VerticalAppWidgetProvider"
             android:exported="true"
             android:label="@string/vertical_widget">
             <intent-filter>
@@ -421,13 +421,13 @@
 
         <!-- Next alarm -->
         <activity
-            android:name="com.best.deskclock.widgets.WidgetConfiguration$NextAlarmWidgetConfiguration"
+            android:name="com.maxxcodebug.maxxclock.widgets.WidgetConfiguration$NextAlarmWidgetConfiguration"
             android:excludeFromRecents="true"
             android:label="@string/next_alarm_widget"
             android:theme="@style/Theme.DeskClock" />
 
         <receiver
-            android:name="com.best.deskclock.widgets.NextAlarmAppWidgetProvider"
+            android:name="com.maxxcodebug.maxxclock.widgets.NextAlarmAppWidgetProvider"
             android:exported="true"
             android:label="@string/next_alarm_widget">
             <intent-filter>
@@ -449,7 +449,7 @@
 
         <!-- Alarm tile -->
         <service
-            android:name="com.best.deskclock.tiles.AlarmTileService"
+            android:name="com.maxxcodebug.maxxclock.tiles.AlarmTileService"
             android:exported="true"
             android:label="@string/menu_alarm"
             android:icon="@drawable/ic_tab_alarm_static"
@@ -465,7 +465,7 @@
 
         <!-- Timer tile -->
         <service
-            android:name="com.best.deskclock.tiles.TimerTileService"
+            android:name="com.maxxcodebug.maxxclock.tiles.TimerTileService"
             android:exported="true"
             android:label="@string/menu_timer"
             android:icon="@drawable/ic_tab_timer_static"
@@ -481,7 +481,7 @@
 
         <!-- Stopwatch tile -->
         <service
-            android:name="com.best.deskclock.tiles.StopwatchTileService"
+            android:name="com.maxxcodebug.maxxclock.tiles.StopwatchTileService"
             android:exported="true"
             android:label="@string/menu_stopwatch"
             android:icon="@drawable/ic_tab_stopwatch_static"
@@ -497,7 +497,7 @@
 
         <!-- Screensaver tile -->
         <service
-            android:name="com.best.deskclock.tiles.ScreensaverTileService"
+            android:name="com.maxxcodebug.maxxclock.tiles.ScreensaverTileService"
             android:exported="true"
             android:label="@string/screensaver_settings_title"
             android:icon="@drawable/ic_screensaver"

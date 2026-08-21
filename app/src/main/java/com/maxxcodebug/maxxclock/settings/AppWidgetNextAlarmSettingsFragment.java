@@ -1,0 +1,258 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
+package com.maxxcodebug.maxxclock.settings;
+
+import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
+import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
+import static com.maxxcodebug.maxxclock.settings.PreferencesKeys.*;
+
+import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.core.view.HapticFeedbackConstantsCompat;
+import androidx.preference.Preference;
+import androidx.preference.SwitchPreferenceCompat;
+
+import com.maxxcodebug.maxxclock.R;
+import com.maxxcodebug.maxxclock.base.BaseSettingsScreenFragment;
+import com.maxxcodebug.maxxclock.data.WidgetDAO;
+import com.maxxcodebug.maxxclock.settings.custompreference.ColorPickerPreference;
+import com.maxxcodebug.maxxclock.settings.custompreference.CustomSliderPreference;
+import com.maxxcodebug.maxxclock.utils.SdkUtils;
+import com.maxxcodebug.maxxclock.utils.Utils;
+import com.maxxcodebug.maxxclock.utils.WidgetUtils;
+import com.maxxcodebug.maxxclock.widgets.NextAlarmAppWidgetProvider;
+
+public class AppWidgetNextAlarmSettingsFragment extends BaseSettingsScreenFragment implements Preference.OnPreferenceChangeListener {
+
+    private int mAppWidgetId = INVALID_APPWIDGET_ID;
+
+    SwitchPreferenceCompat mDisplayTextUppercasePref;
+    SwitchPreferenceCompat mDisplayTextShadowPref;
+    SwitchPreferenceCompat mShowBackgroundOnDigitalWidgetPref;
+    SwitchPreferenceCompat mCustomizeBackgroundCornerRadiusPref;
+    CustomSliderPreference mBackgroundCornerRadiusPref;
+    SwitchPreferenceCompat mApplyHorizontalPaddingPref;
+    SwitchPreferenceCompat mDefaultBackgroundColorPref;
+    ColorPickerPreference mCustomBackgroundColorPref;
+    SwitchPreferenceCompat mDefaultTitleColorPref;
+    ColorPickerPreference mCustomTitleColorPref;
+    SwitchPreferenceCompat mDefaultAlarmTitleColorPref;
+    ColorPickerPreference mCustomAlarmTitleColorPref;
+    SwitchPreferenceCompat mDefaultAlarmColorPref;
+    ColorPickerPreference mCustomAlarmColorPref;
+
+    @Override
+    protected String getFragmentTitle() {
+        return getString(R.string.next_alarm_widget);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        addPreferencesFromResource(R.xml.settings_customize_next_alarm_widget);
+
+        mDisplayTextUppercasePref = findPreference(KEY_NEXT_ALARM_WIDGET_DISPLAY_TEXT_UPPERCASE);
+        mDisplayTextShadowPref = findPreference(KEY_NEXT_ALARM_WIDGET_DISPLAY_TEXT_SHADOW);
+        mShowBackgroundOnDigitalWidgetPref = findPreference(KEY_NEXT_ALARM_WIDGET_DISPLAY_BACKGROUND);
+        mCustomizeBackgroundCornerRadiusPref = findPreference(KEY_NEXT_ALARM_WIDGET_CUSTOMIZE_BACKGROUND_CORNER_RADIUS);
+        mBackgroundCornerRadiusPref = findPreference(KEY_NEXT_ALARM_WIDGET_BACKGROUND_CORNER_RADIUS);
+        mApplyHorizontalPaddingPref = findPreference(KEY_NEXT_ALARM_WIDGET_APPLY_HORIZONTAL_PADDING);
+        mDefaultBackgroundColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_DEFAULT_BACKGROUND_COLOR);
+        mCustomBackgroundColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_CUSTOM_BACKGROUND_COLOR);
+        mDefaultTitleColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_DEFAULT_TITLE_COLOR);
+        mCustomTitleColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_CUSTOM_TITLE_COLOR);
+        mDefaultAlarmTitleColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_DEFAULT_ALARM_TITLE_COLOR);
+        mCustomAlarmTitleColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_CUSTOM_ALARM_TITLE_COLOR);
+        mDefaultAlarmColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_DEFAULT_ALARM_COLOR);
+        mCustomAlarmColorPref = findPreference(KEY_NEXT_ALARM_WIDGET_CUSTOM_ALARM_COLOR);
+
+        setupPreferences();
+
+        WidgetUtils.addFinishOnBackPressedIfLaunchedFromWidget(this);
+
+        requireActivity().setResult(Activity.RESULT_CANCELED);
+
+        Intent intent = requireActivity().getIntent();
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                mAppWidgetId = extras.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID);
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        saveCheckedPreferenceStates();
+
+        updateNextAlarmWidget();
+    }
+
+    @Override
+    public void onDestroy() {
+        nullifyPreferenceListeners(mDisplayTextUppercasePref, mDisplayTextShadowPref, mShowBackgroundOnDigitalWidgetPref,
+            mCustomizeBackgroundCornerRadiusPref, mBackgroundCornerRadiusPref, mApplyHorizontalPaddingPref, mDefaultBackgroundColorPref,
+            mCustomBackgroundColorPref, mDefaultTitleColorPref, mCustomTitleColorPref, mDefaultAlarmTitleColorPref,
+            mCustomAlarmTitleColorPref, mDefaultAlarmColorPref, mCustomAlarmColorPref);
+
+        nullifyAllPrefs();
+
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference pref, Object newValue) {
+        switch (pref.getKey()) {
+            case KEY_NEXT_ALARM_WIDGET_DISPLAY_BACKGROUND -> {
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+
+                boolean displayBackground = (boolean) newValue;
+                boolean isCustomColor = !WidgetDAO.isNextAlarmWidgetDefaultBackgroundColor(mPrefs);
+                boolean isRadiusCustomizable = WidgetDAO.isNextAlarmWidgetBackgroundCornerRadiusCustomizable(mPrefs);
+
+                mCustomizeBackgroundCornerRadiusPref.setVisible(SdkUtils.isAtLeastAndroid12()
+                    ? displayBackground
+                    : displayBackground && isCustomColor);
+                mBackgroundCornerRadiusPref.setVisible(SdkUtils.isAtLeastAndroid12()
+                    ? displayBackground && isRadiusCustomizable
+                    : displayBackground && isCustomColor && isRadiusCustomizable);
+                mDefaultBackgroundColorPref.setVisible(displayBackground);
+                mCustomBackgroundColorPref.setVisible(displayBackground && isCustomColor);
+            }
+
+            case KEY_NEXT_ALARM_WIDGET_CUSTOMIZE_BACKGROUND_CORNER_RADIUS -> {
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+                mBackgroundCornerRadiusPref.setVisible((boolean) newValue);
+            }
+
+            case KEY_NEXT_ALARM_WIDGET_DISPLAY_TEXT_UPPERCASE, KEY_NEXT_ALARM_WIDGET_DISPLAY_TEXT_SHADOW,
+                 KEY_NEXT_ALARM_WIDGET_APPLY_HORIZONTAL_PADDING ->
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+
+            case KEY_NEXT_ALARM_WIDGET_DEFAULT_BACKGROUND_COLOR -> {
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+
+                boolean isCustomColor = !(boolean) newValue;
+                boolean displayBackground = WidgetDAO.isBackgroundDisplayedOnNextAlarmWidget(mPrefs);
+                boolean isRadiusCustomizable = WidgetDAO.isNextAlarmWidgetBackgroundCornerRadiusCustomizable(mPrefs);
+
+                mCustomBackgroundColorPref.setVisible(isCustomColor);
+
+                if (!SdkUtils.isAtLeastAndroid12()) {
+                    mCustomizeBackgroundCornerRadiusPref.setVisible(isCustomColor && displayBackground);
+                    mBackgroundCornerRadiusPref.setVisible(isCustomColor && displayBackground && isRadiusCustomizable);
+                }
+            }
+
+            case KEY_NEXT_ALARM_WIDGET_DEFAULT_TITLE_COLOR -> {
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+                mCustomTitleColorPref.setVisible(!(boolean) newValue);
+            }
+
+            case KEY_NEXT_ALARM_WIDGET_DEFAULT_ALARM_TITLE_COLOR -> {
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+                mCustomAlarmTitleColorPref.setVisible(!(boolean) newValue);
+            }
+
+            case KEY_NEXT_ALARM_WIDGET_DEFAULT_ALARM_COLOR -> {
+                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
+                mCustomAlarmColorPref.setVisible(!(boolean) newValue);
+            }
+        }
+
+        WidgetUtils.scheduleWidgetUpdate(requireContext(), NextAlarmAppWidgetProvider.class);
+        return true;
+    }
+
+    private void setupPreferences() {
+        mDisplayTextUppercasePref.setOnPreferenceChangeListener(this);
+
+        mDisplayTextShadowPref.setOnPreferenceChangeListener(this);
+
+        mShowBackgroundOnDigitalWidgetPref.setOnPreferenceChangeListener(this);
+
+        boolean isBackgroundVisible = WidgetDAO.isBackgroundDisplayedOnNextAlarmWidget(mPrefs);
+        boolean isBackgroundCornerRadiusCustomizable = WidgetDAO.isNextAlarmWidgetBackgroundCornerRadiusCustomizable(mPrefs);
+        boolean isCustomColor = !WidgetDAO.isNextAlarmWidgetDefaultBackgroundColor(mPrefs);
+
+        if (SdkUtils.isAtLeastAndroid12()) {
+            mCustomizeBackgroundCornerRadiusPref.setVisible(isBackgroundVisible);
+            mBackgroundCornerRadiusPref.setVisible(isBackgroundVisible && isBackgroundCornerRadiusCustomizable);
+        } else {
+            mCustomizeBackgroundCornerRadiusPref.setVisible(isBackgroundVisible && isCustomColor);
+            mBackgroundCornerRadiusPref.setVisible(isBackgroundVisible
+                && isCustomColor
+                && isBackgroundCornerRadiusCustomizable);
+        }
+
+        mCustomizeBackgroundCornerRadiusPref.setOnPreferenceChangeListener(this);
+
+        mApplyHorizontalPaddingPref.setOnPreferenceChangeListener(this);
+
+        mDefaultBackgroundColorPref.setVisible(isBackgroundVisible);
+        mDefaultBackgroundColorPref.setOnPreferenceChangeListener(this);
+
+        mCustomBackgroundColorPref.setVisible(isBackgroundVisible && isCustomColor);
+        mCustomBackgroundColorPref.setOnPreferenceChangeListener(this);
+
+        mDefaultTitleColorPref.setOnPreferenceChangeListener(this);
+
+        mCustomTitleColorPref.setVisible(!WidgetDAO.isNextAlarmWidgetDefaultTitleColor(mPrefs));
+        mCustomTitleColorPref.setOnPreferenceChangeListener(this);
+
+        mDefaultAlarmTitleColorPref.setOnPreferenceChangeListener(this);
+
+        mCustomAlarmTitleColorPref.setVisible(!WidgetDAO.isNextAlarmWidgetDefaultAlarmTitleColor(mPrefs));
+        mCustomAlarmTitleColorPref.setOnPreferenceChangeListener(this);
+
+        mDefaultAlarmColorPref.setOnPreferenceChangeListener(this);
+
+        mCustomAlarmColorPref.setVisible(!WidgetDAO.isNextAlarmWidgetDefaultAlarmColor(mPrefs));
+        mCustomAlarmColorPref.setOnPreferenceChangeListener(this);
+    }
+
+    private void saveCheckedPreferenceStates() {
+        mDisplayTextUppercasePref.setChecked(WidgetDAO.isTextUppercaseDisplayedOnNextAlarmWidget(mPrefs));
+        mDisplayTextShadowPref.setChecked(WidgetDAO.isTextShadowDisplayedOnNextAlarmWidget(mPrefs));
+        mShowBackgroundOnDigitalWidgetPref.setChecked(WidgetDAO.isBackgroundDisplayedOnNextAlarmWidget(mPrefs));
+        mCustomizeBackgroundCornerRadiusPref.setChecked(WidgetDAO.isNextAlarmWidgetBackgroundCornerRadiusCustomizable(mPrefs));
+        mApplyHorizontalPaddingPref.setChecked(WidgetDAO.isNextAlarmWidgetHorizontalPaddingApplied(mPrefs));
+        mDefaultBackgroundColorPref.setChecked(WidgetDAO.isNextAlarmWidgetDefaultBackgroundColor(mPrefs));
+        mDefaultTitleColorPref.setChecked(WidgetDAO.isNextAlarmWidgetDefaultTitleColor(mPrefs));
+        mDefaultAlarmTitleColorPref.setChecked(WidgetDAO.isNextAlarmWidgetDefaultAlarmTitleColor(mPrefs));
+        mDefaultAlarmColorPref.setChecked(WidgetDAO.isNextAlarmWidgetDefaultAlarmColor(mPrefs));
+    }
+
+    private void updateNextAlarmWidget() {
+        AppWidgetManager wm = AppWidgetManager.getInstance(requireContext());
+        NextAlarmAppWidgetProvider.updateAppWidget(requireContext(), wm, mAppWidgetId);
+
+        Intent result = new Intent();
+        result.putExtra(EXTRA_APPWIDGET_ID, mAppWidgetId);
+        requireActivity().setResult(Activity.RESULT_OK, result);
+    }
+
+    private void nullifyAllPrefs() {
+        mDisplayTextUppercasePref = null;
+        mDisplayTextShadowPref = null;
+        mShowBackgroundOnDigitalWidgetPref = null;
+        mCustomizeBackgroundCornerRadiusPref = null;
+        mBackgroundCornerRadiusPref = null;
+        mApplyHorizontalPaddingPref = null;
+        mDefaultBackgroundColorPref = null;
+        mCustomBackgroundColorPref = null;
+        mDefaultTitleColorPref = null;
+        mCustomTitleColorPref = null;
+        mDefaultAlarmTitleColorPref = null;
+        mCustomAlarmTitleColorPref = null;
+        mDefaultAlarmColorPref = null;
+        mCustomAlarmColorPref = null;
+    }
+
+}

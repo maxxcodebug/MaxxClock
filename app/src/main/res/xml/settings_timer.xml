@@ -51,7 +51,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.AutoSilenceDurationPreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.AutoSilenceDurationPreference
             android:key="key_timer_auto_silence_duration"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/auto_silence_title"
@@ -66,7 +66,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.AlarmVolumePreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.AlarmVolumePreference
             android:key="key_volume_setting"
             android:layout="@layout/settings_preference_slider_layout"
             android:title="@string/alarm_volume_title"
@@ -74,7 +74,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.VolumeCrescendoDurationPreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.VolumeCrescendoDurationPreference
             android:key="key_timer_volume_crescendo_duration"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/crescendo_duration_title"
@@ -123,7 +123,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.CustomSliderPreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.CustomSliderPreference
             android:key="key_external_audio_device_volume"
             android:layout="@layout/settings_preference_slider_layout"
             android:title="@string/external_audio_device_volume_title"
@@ -150,7 +150,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.VibrationPatternPreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.VibrationPatternPreference
             android:key="key_timer_vibration_pattern"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/vibration_pattern_title"
@@ -215,7 +215,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.CustomSliderPreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.CustomSliderPreference
             android:key="key_timer_shake_intensity"
             android:layout="@layout/settings_preference_slider_layout"
             android:title="@string/shake_intensity_title"
@@ -251,7 +251,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.TimerAddTimeButtonValuePreference
+        <com.maxxcodebug.maxxclock.settings.custompreference.TimerAddTimeButtonValuePreference
             android:key="key_timer_add_time_button_value"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/default_time_to_add_to_timer_title"

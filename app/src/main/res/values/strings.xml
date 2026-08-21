@@ -12,7 +12,9 @@
     <!-- ******************** -->
 
     <!-- Label shown on launcher icon -->
-    <string name="app_label">Clock</string>
+    <string name="app_label">MaxxClock</string>
+    <string name="app_label_nightly">MaxxClock Nightly</string>
+    <string name="app_label_dev">MaxxClock Dev</string>
     <!-- Default label to display for an alarm -->
     <string name="default_label">Alarm</string>
     <!-- Label "Default" -->

@@ -16,7 +16,7 @@
         android:layout_height="32dp"
         android:paddingTop="16dp" />
 
-    <com.best.deskclock.uicomponents.TextTime
+    <com.maxxcodebug.maxxclock.uicomponents.TextTime
         android:id="@+id/digital_clock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
