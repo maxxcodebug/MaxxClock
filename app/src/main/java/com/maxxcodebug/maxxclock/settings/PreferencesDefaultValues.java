@@ -61,7 +61,7 @@ public class PreferencesDefaultValues {
         VISIBLE_TAB_TIMER,
         VISIBLE_TAB_STOPWATCH
     );
-    public static final String DEFAULT_TAB_TITLE_VISIBILITY = "1";
+    public static final String DEFAULT_TAB_TITLE_VISIBILITY = "2";
     public static final String TAB_TITLE_VISIBILITY_NEVER = "1";
     public static final boolean DEFAULT_TAB_INDICATOR = true;
     public static final String DEFAULT_TAB_ANIMATION = "tab_animation_default";
