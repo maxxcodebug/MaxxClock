@@ -35,3 +35,5 @@ app/build
 app/release
 app/debug
 app/nightly
+app/src/main/res/**/*.bak
+*.bak
