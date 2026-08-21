@@ -15,7 +15,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
-import android.text.format.DateFormatSymbols;
+import java.text.DateFormatSymbols;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
