@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alarm_label">
 
-        <com.best.deskclock.uicomponents.TextTime
+        <com.maxxcodebug.maxxclock.uicomponents.TextTime
             android:id="@+id/digital_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,6 +67,15 @@
             tools:text="AM" />
 
     </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/days_of_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:importantForAccessibility="no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_row" />
 
     <LinearLayout
         android:id="@+id/day_dots_row"
