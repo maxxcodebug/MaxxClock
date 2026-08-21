@@ -23,7 +23,7 @@ jobs:
       - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: echo "$KEYSTORE_BASE64" | base64 -d > maxxclock-release.jks
+        run: echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
 
       - name: Create keystore.properties
         env:
@@ -32,7 +32,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           cat > keystore.properties << PROPS
-          storeFile=../maxxclock-release.jks
+          storeFile=keystore.jks
           storePassword=$KEYSTORE_PASSWORD
           keyAlias=$KEY_ALIAS
           keyPassword=$KEY_PASSWORD
