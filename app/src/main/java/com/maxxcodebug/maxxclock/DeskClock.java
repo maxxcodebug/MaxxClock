@@ -812,6 +812,12 @@ public class DeskClock extends BaseActivity implements FabContainer {
             .setFrameClearDrawable(windowBackground)
             .setBlurRadius(16f);
         mBinding.bottomNavBlurView.setOverlayColor(Color.parseColor("#33000000"));
+
+        mBinding.fabBlurView.setClipToOutline(true);
+        mBinding.fabBlurView.setupWith(rootViewGroup, new RenderScriptBlur(this))
+            .setFrameClearDrawable(windowBackground)
+            .setBlurRadius(16f);
+        mBinding.fabBlurView.setOverlayColor(Color.parseColor("#33000000"));
     }
 
     /**

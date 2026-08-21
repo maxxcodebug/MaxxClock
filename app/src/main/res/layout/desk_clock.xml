@@ -135,27 +135,33 @@
 
     </eightbitlab.com.blurview.BlurView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        style="@style/FloatingActionButton"
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/fab_blur_view"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:scaleType="center"
-        android:contentDescription="@null"
-        android:importantForAccessibility="no"
-        android:elevation="0dp"
-        app:elevation="0dp"
-        app:pressedTranslationZ="0dp"
-        app:backgroundTint="@android:color/transparent"
         android:background="@drawable/bg_bottom_nav_pill"
-        app:fabCustomSize="56dp"
-        app:tint="?attr/colorOnSurface"
+        android:clipToOutline="true"
+        android:outlineProvider="background"
         app:layout_constraintStart_toEndOf="@id/bottom_nav_blur_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/bottom_nav_blur_view"
         app:layout_constraintBottom_toBottomOf="@id/bottom_nav_blur_view"
-        android:layout_marginEnd="16dp"
-        tools:src="@drawable/ic_fab_play" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:id="@+id/fab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:padding="14dp"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            app:tint="?attr/colorOnSurface"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:elevation="0dp"
+            tools:src="@drawable/ic_fab_play" />
+
+    </eightbitlab.com.blurview.BlurView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
