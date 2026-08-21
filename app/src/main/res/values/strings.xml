@@ -13,6 +13,9 @@
 
     <!-- Label shown on launcher icon -->
     <string name="app_label">MaxxClock</string>
+    <string name="countdown_hours_minutes">Alarm in %1$d hours %2$d minutes</string>
+    <string name="countdown_hours_only">Alarm in %1$d hours</string>
+    <string name="countdown_minutes_only">Alarm in %1$d minutes</string>
     <!-- Default label to display for an alarm -->
     <string name="default_label">Alarm</string>
     <!-- Label "Default" -->

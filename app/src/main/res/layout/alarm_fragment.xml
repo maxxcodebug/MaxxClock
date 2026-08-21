@@ -13,6 +13,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/alarm_countdown_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingVertical="28dp"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_alarm_header_gradient"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/countdown_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#E8C888"
+            tools:text="Alarm in 7 hours 31 minutes" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/countdown_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textSize="15sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="Wed, Aug 19, 6:15 AM" />
+
+    </LinearLayout>
+
     <include
         layout="@layout/volume_warning_banner"
         android:id="@+id/alarm_volume_warning_banner"

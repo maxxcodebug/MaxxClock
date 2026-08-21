@@ -20,6 +20,7 @@ import static com.maxxcodebug.maxxclock.settings.PreferencesKeys.KEY_DISPLAY_LOW
 import static com.maxxcodebug.maxxclock.uidata.UiDataModel.Tab.ALARMS;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -88,6 +89,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 
 import java.text.Collator;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -385,6 +387,8 @@ public final class AlarmFragment extends DeskClockFragment
         }
 
         restoreMaterialTimePickerListener();
+
+        updateCountdownHeader();
     }
 
     @Override
@@ -467,6 +471,8 @@ public final class AlarmFragment extends DeskClockFragment
 
             itemHolders.add(itemHolder);
         }
+
+        updateCountdownHeader();
 
         final boolean wantsSortByNextAlarmTime = SettingsDAO.getAlarmSorting(mPrefs).equals(SORT_ALARM_BY_NEXT_ALARM_TIME);
         final boolean wantsSortByName = SettingsDAO.getAlarmSorting(mPrefs).equals(SORT_ALARM_BY_NAME);
@@ -1195,4 +1201,48 @@ public final class AlarmFragment extends DeskClockFragment
             }
         }
     }
+    /**
+     * Updates the hero countdown header showing time until the next scheduled alarm.
+     */
+    private void updateCountdownHeader() {
+        if (mBinding == null) {
+            return;
+        }
+
+        AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager.AlarmClockInfo nextAlarm = alarmManager != null ? alarmManager.getNextAlarmClock() : null;
+
+        if (nextAlarm == null) {
+            mBinding.alarmCountdownHeader.setVisibility(View.GONE);
+            return;
+        }
+
+        long triggerMillis = nextAlarm.getTriggerTime();
+        long diffMillis = triggerMillis - System.currentTimeMillis();
+        if (diffMillis < 0) {
+            mBinding.alarmCountdownHeader.setVisibility(View.GONE);
+            return;
+        }
+
+        long totalMinutes = diffMillis / 60000;
+        long hours = totalMinutes / 60;
+        long minutes = totalMinutes % 60;
+
+        String countdownStr;
+        if (hours > 0 && minutes > 0) {
+            countdownStr = getString(R.string.countdown_hours_minutes, hours, minutes);
+        } else if (hours > 0) {
+            countdownStr = getString(R.string.countdown_hours_only, hours);
+        } else {
+            countdownStr = getString(R.string.countdown_minutes_only, minutes);
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, h:mm a", java.util.Locale.getDefault());
+        String dateStr = dateFormat.format(new java.util.Date(triggerMillis));
+
+        mBinding.countdownText.setText(countdownStr);
+        mBinding.countdownDate.setText(dateStr);
+        mBinding.alarmCountdownHeader.setVisibility(View.VISIBLE);
+    }
+
 }
