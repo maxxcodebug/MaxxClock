@@ -37,3 +37,4 @@ app/debug
 app/nightly
 app/src/main/res/**/*.bak
 *.bak
+*.bak2
