@@ -14,77 +14,119 @@
     android:layout_height="wrap_content"
     android:minHeight="130dp"
     android:importantForAccessibility="no"
-    android:paddingVertical="6dp"
+    android:padding="16dp"
     tools:background="@drawable/bg_card_for_preview"
     tools:layout_marginHorizontal="10dp"
-    tools:layout_marginBottom="2dp">
+    tools:layout_marginBottom="10dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/alarm_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:paddingBottom="4dp"
         android:gravity="center_vertical"
         android:focusable="true"
         android:ellipsize="end"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/on_off_button"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/digital_clock"
-        app:layout_constraintWidth_percent="0.7"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:text="@string/category_alarm"
         tools:ignore="TextContrastCheck" />
 
-    <com.maxxcodebug.maxxclock.uicomponents.TextTime
-        android:id="@+id/digital_clock"
+    <LinearLayout
+        android:id="@+id/time_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:background="?attr/selectableItemBackground"
-        android:textStyle="bold"
-        android:includeFontPadding="false"
-        android:focusable="true"
-        android:fontFeatureSettings="tnum"
+        android:orientation="horizontal"
+        android:gravity="bottom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/alarm_label"
-        app:layout_constraintBottom_toTopOf="@+id/days_of_week"
-        tools:text="08:30"
-        tools:textSize="40sp" />
+        app:layout_constraintTop_toBottomOf="@+id/alarm_label">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/days_of_week"
+        <com.best.deskclock.uicomponents.TextTime
+            android:id="@+id/digital_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:focusable="true"
+            android:fontFeatureSettings="tnum"
+            tools:text="08:30"
+            tools:textSize="48sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/am_pm_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="AM" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/day_dots_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="20dp"
-        android:textSize="14sp"
-        android:maxLines="2"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/preemptive_dismiss_button"
-        app:layout_constraintTop_toBottomOf="@+id/digital_clock"
-        app:layout_constraintBottom_toTopOf="@+id/upcoming_date"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintHorizontal_bias="0.0"
-        tools:text="Mon, Tue, Wed" />
+        app:layout_constraintTop_toBottomOf="@+id/time_row">
+
+        <!-- 7 day-letter + dot columns; each column's TextView shows S/M/T/W/T/F/S
+             and the View below it is the dot indicator, tinted on/off per selected day. -->
+
+        <LinearLayout android:id="@+id/day_col_0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+            <TextView android:id="@+id/day_letter_0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="S" />
+            <View android:id="@+id/day_dot_0" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/day_col_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+            <TextView android:id="@+id/day_letter_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="M" />
+            <View android:id="@+id/day_dot_1" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/day_col_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+            <TextView android:id="@+id/day_letter_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="T" />
+            <View android:id="@+id/day_dot_2" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/day_col_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+            <TextView android:id="@+id/day_letter_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="W" />
+            <View android:id="@+id/day_dot_3" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/day_col_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+            <TextView android:id="@+id/day_letter_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="T" />
+            <View android:id="@+id/day_dot_4" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/day_col_5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+            <TextView android:id="@+id/day_letter_5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="F" />
+            <View android:id="@+id/day_dot_5" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/day_col_6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/day_letter_6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="S" />
+            <View android:id="@+id/day_dot_6" android:layout_width="5dp" android:layout_height="5dp" android:layout_marginTop="3dp" android:background="@drawable/day_dot_indicator" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/upcoming_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="20dp"
-        android:textSize="14sp"
+        android:layout_marginTop="6dp"
+        android:textSize="13sp"
         android:textColor="?attr/colorTertiary"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/preemptive_dismiss_button"
-        app:layout_constraintTop_toBottomOf="@+id/days_of_week"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/day_dots_row"
         tools:text="Jan, 01 Monday"
         tools:visibility="visible" />
 
@@ -92,12 +134,9 @@
         android:id="@+id/on_off_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
         app:thumbIconTint="@color/switch_thumb_icon_tint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/preemptive_dismiss_button"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:thumbIcon="@drawable/alarm_switch_thumb_icon"
         tools:ignore="TouchTargetSizeCheck" />
 
@@ -105,8 +144,7 @@
         android:id="@+id/preemptive_dismiss_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:minHeight="40dp"
         android:padding="10dp"
         android:includeFontPadding="false"
@@ -116,9 +154,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/on_off_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintHorizontal_bias="1.0"
         tools:text="@string/alarm_alert_dismiss_and_delete_text_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

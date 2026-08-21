@@ -15,7 +15,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
+import android.text.format.DateFormatSymbols;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.core.view.HapticFeedbackConstantsCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +36,7 @@ import com.maxxcodebug.maxxclock.utils.ThemeUtils;
 import com.maxxcodebug.maxxclock.utils.Utils;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -123,6 +127,7 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
         bindOnOffSwitch(alarm);
         bindRepeatText(context, alarm, alarmInstance);
         bindUpcomingDate(alarm, alarmInstance);
+        bindDayDots(context, alarm);
         bindPreemptiveDismissButton(context, alarm, alarmInstance);
         bindAlphaAnimation(alarm);
 
@@ -293,6 +298,32 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
         mBinding.alarmLabel.animate().alpha(targetAlpha).setDuration(ALPHA_ANIMATION_DURATION).start();
         mBinding.digitalClock.animate().alpha(targetAlpha).setDuration(ALPHA_ANIMATION_DURATION).start();
         mBinding.daysOfWeek.animate().alpha(targetAlpha).setDuration(ALPHA_ANIMATION_DURATION).start();
+    }
+
+    private void bindDayDots(Context context, Alarm alarm) {
+        Weekdays.Order order = SettingsDAO.getWeekdayOrder(mPrefs);
+        List<Integer> calendarDays = order.getCalendarDays();
+
+        TextView[] letters = {
+            mBinding.dayLetter0, mBinding.dayLetter1, mBinding.dayLetter2, mBinding.dayLetter3,
+            mBinding.dayLetter4, mBinding.dayLetter5, mBinding.dayLetter6
+        };
+        View[] dots = {
+            mBinding.dayDot0, mBinding.dayDot1, mBinding.dayDot2, mBinding.dayDot3,
+            mBinding.dayDot4, mBinding.dayDot5, mBinding.dayDot6
+        };
+
+        String[] shortWeekdays = new DateFormatSymbols(mLocale).getShortWeekdays();
+
+        for (int i = 0; i < 7; i++) {
+            int calendarDay = calendarDays.get(i);
+            String letter = shortWeekdays[calendarDay].substring(0, 1).toUpperCase(mLocale);
+            letters[i].setText(letter);
+
+            boolean isOn = alarm.daysOfWeek.isBitOn(calendarDay);
+            dots[i].setAlpha(isOn ? 1f : 0.25f);
+            letters[i].setAlpha(isOn ? 1f : 0.5f);
+        }
     }
 
     // ********************
