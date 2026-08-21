@@ -59,7 +59,7 @@ android {
         }
 
         debug {
-            manifestPlaceholders = [appName: "@string/app_label_dev"]
+            manifestPlaceholders = [appName: "@string/app_label_debug"]
             versionNameSuffix = "-dev"
             applicationIdSuffix = ".dev"
             buildConfigField "boolean", "IS_DEBUG_BUILD", "true"
