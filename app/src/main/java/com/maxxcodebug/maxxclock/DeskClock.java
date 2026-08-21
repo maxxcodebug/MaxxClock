@@ -748,13 +748,9 @@ public class DeskClock extends BaseActivity implements FabContainer {
 
         mBinding.deskClockBottomMenu.setItemActiveIndicatorEnabled(SettingsDAO.isTabIndicatorDisplayed(mPrefs));
 
-        if (tabTitleVisibility.equals(DEFAULT_TAB_TITLE_VISIBILITY)) {
-            mBinding.deskClockBottomMenu.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
-        } else if (tabTitleVisibility.equals(TAB_TITLE_VISIBILITY_NEVER)) {
-            mBinding.deskClockBottomMenu.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_UNLABELED);
-        } else {
-            mBinding.deskClockBottomMenu.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_SELECTED);
-        }
+        // Keep bottom navigation icons-only.
+        mBinding.deskClockBottomMenu.setLabelVisibilityMode(
+                NavigationBarView.LABEL_VISIBILITY_UNLABELED);
 
         mBinding.deskClockBottomMenu.setItemIconTintList(new ColorStateList(
             new int[][]{{android.R.attr.state_selected}, {android.R.attr.state_pressed}, {}},
