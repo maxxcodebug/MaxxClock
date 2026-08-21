@@ -112,7 +112,7 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_bottom_nav_pill"
         android:clipToOutline="true"
@@ -152,8 +152,10 @@
         app:fabCustomSize="56dp"
         app:tint="?attr/colorOnSurface"
         app:layout_constraintStart_toEndOf="@id/bottom_nav_blur_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/bottom_nav_blur_view"
         app:layout_constraintBottom_toBottomOf="@id/bottom_nav_blur_view"
+        android:layout_marginEnd="16dp"
         tools:src="@drawable/ic_fab_play" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
