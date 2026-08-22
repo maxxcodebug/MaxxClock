@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="56dp"
-    android:height="56dp"
-    android:viewportWidth="64"
-    android:viewportHeight="64">
-    <path
-        android:fillColor="#EDEFFB"
-        android:pathData="M42,10 C30,10 20,20 20,32 C20,44 30,54 42,54 C34,50 28,42 28,32 C28,22 34,14 42,10 Z" />
-</vector>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"
+    android:width="64dp"
+    android:height="64dp">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="32dp"
+        android:centerX="0.35"
+        android:centerY="0.3"
+        android:startColor="#FFFFFFFF"
+        android:centerColor="#FFD8E0F5"
+        android:endColor="#FF8C9BC9" />
+</shape>
