@@ -158,7 +158,6 @@ public final class AlarmFragment extends DeskClockFragment
 
     // Controllers
     private AlarmAdapter mItemAdapter;
-    private ObjectAnimator mSunRaysAnimator;
     private AlarmUpdateHandler mAlarmUpdateHandler;
     private EmptyViewController mEmptyViewController;
     private AlarmTimeClickHandler mAlarmTimeClickHandler;
@@ -392,6 +391,7 @@ public final class AlarmFragment extends DeskClockFragment
 
         restoreMaterialTimePickerListener();
 
+        setupHeaderBlur();
         updateCountdownHeader();
     }
 
@@ -444,11 +444,6 @@ public final class AlarmFragment extends DeskClockFragment
         mEmptyViewController = null;
         mAlarmUpdateHandler = null;
         mAlarmTimeClickHandler = null;
-
-        if (mSunRaysAnimator != null) {
-            mSunRaysAnimator.cancel();
-            mSunRaysAnimator = null;
-        }
 
         super.onDestroyView();
     }
@@ -1210,6 +1205,26 @@ public final class AlarmFragment extends DeskClockFragment
             }
         }
     }
+    private boolean mHeaderBlurSetup = false;
+
+    private void setupHeaderBlur() {
+        if (mHeaderBlurSetup || mBinding == null) {
+            return;
+        }
+
+        android.view.View decorView = requireActivity().getWindow().getDecorView();
+        android.view.ViewGroup rootViewGroup = decorView.findViewById(android.R.id.content);
+        android.graphics.drawable.Drawable windowBackground = decorView.getBackground();
+
+        mBinding.alarmCountdownHeader.setClipToOutline(true);
+        mBinding.alarmCountdownHeader.setupWith(rootViewGroup, new eightbitlab.com.blurview.RenderScriptBlur(requireContext()))
+            .setFrameClearDrawable(windowBackground)
+            .setBlurRadius(16f);
+        mBinding.alarmCountdownHeader.setOverlayColor(android.graphics.Color.parseColor("#33000000"));
+
+        mHeaderBlurSetup = true;
+    }
+
     /**
      * Updates the hero countdown header showing time until the next scheduled alarm.
      */
@@ -1252,29 +1267,6 @@ public final class AlarmFragment extends DeskClockFragment
         mBinding.countdownText.setText(countdownStr);
         mBinding.countdownDate.setText(dateStr);
         mBinding.alarmCountdownHeader.setVisibility(View.VISIBLE);
-
-        mBinding.alarmCountdownHeader.setBackground(DayNightThemeUtils.getCurrentGradient());
-        mBinding.phaseGlow.setImageResource(DayNightThemeUtils.getCurrentGlowDrawableRes());
-        mBinding.phaseIcon.setImageResource(DayNightThemeUtils.getCurrentIconDrawableRes());
-
-        if (DayNightThemeUtils.shouldShowRays()) {
-            mBinding.phaseRays.setVisibility(View.VISIBLE);
-            mBinding.phaseRays.setImageResource(com.maxxcodebug.maxxclock.R.drawable.ic_sun_rays);
-
-            if (mSunRaysAnimator == null || !mSunRaysAnimator.isRunning()) {
-                mSunRaysAnimator = ObjectAnimator.ofFloat(mBinding.phaseRays, "rotation", 0f, 360f);
-                mSunRaysAnimator.setDuration(40000);
-                mSunRaysAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-                mSunRaysAnimator.setInterpolator(new LinearInterpolator());
-                mSunRaysAnimator.start();
-            }
-        } else {
-            mBinding.phaseRays.setVisibility(View.GONE);
-            if (mSunRaysAnimator != null) {
-                mSunRaysAnimator.cancel();
-                mSunRaysAnimator = null;
-            }
-        }
     }
 
 }
