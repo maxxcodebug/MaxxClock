@@ -19,12 +19,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingVertical="28dp"
+        android:paddingVertical="20dp"
         android:paddingHorizontal="16dp"
         android:background="@android:color/transparent"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/phase_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="52sp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            tools:text="☀️" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/countdown_text"

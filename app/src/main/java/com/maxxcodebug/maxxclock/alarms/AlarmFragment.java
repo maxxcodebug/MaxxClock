@@ -81,6 +81,7 @@ import com.maxxcodebug.maxxclock.uicomponents.toast.SnackbarManager;
 import com.maxxcodebug.maxxclock.uicomponents.toast.ToastManager;
 import com.maxxcodebug.maxxclock.uidata.UiDataModel;
 import com.maxxcodebug.maxxclock.utils.LogUtils;
+import com.maxxcodebug.maxxclock.utils.DayNightThemeUtils;
 import com.maxxcodebug.maxxclock.utils.RingtoneUtils;
 import com.maxxcodebug.maxxclock.utils.SdkUtils;
 import com.maxxcodebug.maxxclock.utils.ThemeUtils;
@@ -1243,6 +1244,9 @@ public final class AlarmFragment extends DeskClockFragment
         mBinding.countdownText.setText(countdownStr);
         mBinding.countdownDate.setText(dateStr);
         mBinding.alarmCountdownHeader.setVisibility(View.VISIBLE);
+
+        mBinding.alarmCountdownHeader.setBackground(DayNightThemeUtils.getCurrentGradient());
+        mBinding.phaseIcon.setText(DayNightThemeUtils.getCurrentPhaseEmoji());
     }
 
 }
