@@ -21,7 +21,7 @@
         android:gravity="center"
         android:paddingVertical="28dp"
         android:paddingHorizontal="16dp"
-        android:background="@drawable/bg_alarm_header_gradient"
+        android:background="@android:color/transparent"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
