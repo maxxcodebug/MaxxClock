@@ -1246,7 +1246,8 @@ public final class AlarmFragment extends DeskClockFragment
         mBinding.alarmCountdownHeader.setVisibility(View.VISIBLE);
 
         mBinding.alarmCountdownHeader.setBackground(DayNightThemeUtils.getCurrentGradient());
-        mBinding.phaseIcon.setText(DayNightThemeUtils.getCurrentPhaseEmoji());
+        mBinding.phaseGlow.setImageResource(DayNightThemeUtils.getCurrentGlowDrawableRes());
+        mBinding.phaseIcon.setImageResource(DayNightThemeUtils.getCurrentIconDrawableRes());
     }
 
 }

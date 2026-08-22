@@ -7,6 +7,8 @@ package com.maxxcodebug.maxxclock.utils;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
+import com.maxxcodebug.maxxclock.R;
+
 import java.util.Calendar;
 
 /**
@@ -23,10 +25,6 @@ public final class DayNightThemeUtils {
     public static final int PHASE_DAY = 2;
     public static final int PHASE_SUNSET = 3;
 
-    /**
-     * Returns one of PHASE_NIGHT, PHASE_SUNRISE, PHASE_DAY, PHASE_SUNSET
-     * based on the current hour of day.
-     */
     public static int getCurrentPhase() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
@@ -41,9 +39,6 @@ public final class DayNightThemeUtils {
         }
     }
 
-    /**
-     * Builds a GradientDrawable matching the current time-of-day phase.
-     */
     public static GradientDrawable getCurrentGradient() {
         int[] colors;
 
@@ -84,21 +79,29 @@ public final class DayNightThemeUtils {
         return drawable;
     }
 
-    /**
-     * Returns a text emoji representing the current phase (sun, sunrise, sunset, moon).
-     * Using emoji avoids needing new drawable assets for the first version.
-     */
-    public static String getCurrentPhaseEmoji() {
+    public static int getCurrentGlowDrawableRes() {
         switch (getCurrentPhase()) {
             case PHASE_SUNRISE:
-                return "\uD83C\uDF05"; // 🌅
-            case PHASE_DAY:
-                return "\u2600\uFE0F"; // ☀️
             case PHASE_SUNSET:
-                return "\uD83C\uDF07"; // 🌇
+            case PHASE_DAY:
+                return R.drawable.bg_sun_glow;
             case PHASE_NIGHT:
             default:
-                return "\uD83C\uDF19"; // 🌙
+                return R.drawable.bg_moon_glow;
+        }
+    }
+
+    public static int getCurrentIconDrawableRes() {
+        switch (getCurrentPhase()) {
+            case PHASE_SUNRISE:
+                return R.drawable.ic_sunrise_glow;
+            case PHASE_DAY:
+                return R.drawable.ic_sun_disc;
+            case PHASE_SUNSET:
+                return R.drawable.ic_sunset_glow;
+            case PHASE_NIGHT:
+            default:
+                return R.drawable.ic_moon_crescent;
         }
     }
 }
