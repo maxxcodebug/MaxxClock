@@ -91,6 +91,11 @@ public final class DayNightThemeUtils {
         }
     }
 
+    public static boolean shouldShowRays() {
+        int phase = getCurrentPhase();
+        return phase == PHASE_DAY || phase == PHASE_SUNRISE || phase == PHASE_SUNSET;
+    }
+
     public static int getCurrentIconDrawableRes() {
         switch (getCurrentPhase()) {
             case PHASE_SUNRISE:

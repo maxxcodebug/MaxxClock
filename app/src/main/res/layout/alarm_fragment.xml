@@ -40,6 +40,14 @@
                 tools:src="@drawable/bg_sun_glow" />
 
             <ImageView
+                android:id="@+id/phase_rays"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                tools:src="@drawable/ic_sun_rays" />
+
+            <ImageView
                 android:id="@+id/phase_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

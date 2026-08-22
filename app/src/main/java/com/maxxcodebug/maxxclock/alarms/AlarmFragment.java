@@ -82,6 +82,8 @@ import com.maxxcodebug.maxxclock.uicomponents.toast.ToastManager;
 import com.maxxcodebug.maxxclock.uidata.UiDataModel;
 import com.maxxcodebug.maxxclock.utils.LogUtils;
 import com.maxxcodebug.maxxclock.utils.DayNightThemeUtils;
+import android.animation.ObjectAnimator;
+import android.view.animation.LinearInterpolator;
 import com.maxxcodebug.maxxclock.utils.RingtoneUtils;
 import com.maxxcodebug.maxxclock.utils.SdkUtils;
 import com.maxxcodebug.maxxclock.utils.ThemeUtils;
@@ -156,6 +158,7 @@ public final class AlarmFragment extends DeskClockFragment
 
     // Controllers
     private AlarmAdapter mItemAdapter;
+    private ObjectAnimator mSunRaysAnimator;
     private AlarmUpdateHandler mAlarmUpdateHandler;
     private EmptyViewController mEmptyViewController;
     private AlarmTimeClickHandler mAlarmTimeClickHandler;
@@ -441,6 +444,11 @@ public final class AlarmFragment extends DeskClockFragment
         mEmptyViewController = null;
         mAlarmUpdateHandler = null;
         mAlarmTimeClickHandler = null;
+
+        if (mSunRaysAnimator != null) {
+            mSunRaysAnimator.cancel();
+            mSunRaysAnimator = null;
+        }
 
         super.onDestroyView();
     }
@@ -1248,6 +1256,25 @@ public final class AlarmFragment extends DeskClockFragment
         mBinding.alarmCountdownHeader.setBackground(DayNightThemeUtils.getCurrentGradient());
         mBinding.phaseGlow.setImageResource(DayNightThemeUtils.getCurrentGlowDrawableRes());
         mBinding.phaseIcon.setImageResource(DayNightThemeUtils.getCurrentIconDrawableRes());
+
+        if (DayNightThemeUtils.shouldShowRays()) {
+            mBinding.phaseRays.setVisibility(View.VISIBLE);
+            mBinding.phaseRays.setImageResource(com.maxxcodebug.maxxclock.R.drawable.ic_sun_rays);
+
+            if (mSunRaysAnimator == null || !mSunRaysAnimator.isRunning()) {
+                mSunRaysAnimator = ObjectAnimator.ofFloat(mBinding.phaseRays, "rotation", 0f, 360f);
+                mSunRaysAnimator.setDuration(40000);
+                mSunRaysAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+                mSunRaysAnimator.setInterpolator(new LinearInterpolator());
+                mSunRaysAnimator.start();
+            }
+        } else {
+            mBinding.phaseRays.setVisibility(View.GONE);
+            if (mSunRaysAnimator != null) {
+                mSunRaysAnimator.cancel();
+                mSunRaysAnimator = null;
+            }
+        }
     }
 
 }
